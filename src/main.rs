@@ -1,12 +1,28 @@
-use std::env;
+use clap::{Parser, Subcommand};
+
+#[derive(Parser, Default, Debug)]
+#[command(author, version, about)]
+struct Cli {
+    #[arg(short, long)]
+    name: String,
+    #[arg(short, long)]
+    second_arg: Option<String>,
+    #[arg(short, long)]
+    third_arg: Option<String>,
+    #[arg(short, long)]
+    count: u8,
+}
 
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
 
-    let query = &args[1];
-    dbg!("{}", query);
-    
+    let cli = Cli::parse();
 
-    dbg!("{:?}", args);
+    println!("hello: {}", cli.name);
+    println!("count: {}", cli.count);
+
+    if let Some(arg) = cli.third_arg {
+        println!("third_arg: {:?}", arg);
+    }
+ 
 }
