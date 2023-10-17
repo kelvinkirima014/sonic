@@ -1,8 +1,11 @@
-use clap::{Parser, Subcommand};
+use clap::Parser;
 
 #[derive(Parser, Default, Debug)]
-#[command(author, version, about)]
+#[command(version = "1.0")]
+#[command(author = "Kirima")]
+#[command(about = "CLI tool to measure the speed of your network")]
 struct Cli {
+    ///name 
     #[arg(short, long)]
     name: String,
     #[arg(short, long)]
