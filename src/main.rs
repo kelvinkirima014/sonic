@@ -1,4 +1,7 @@
 use clap::Parser;
+use hyper::{Client, Uri, Request, Body};
+use std::time::Instant;
+
 
 #[derive(Parser, Default, Debug)]
 #[command(version = "1.0")]
@@ -16,8 +19,22 @@ struct Cli {
     count: u8,
 }
 
+#[tokio::main]
+async fn main() {
 
-fn main() {
+    let client = Client::new();
+
+    let req = Request::builder()
+        .method(hyper::Method::GET)
+        .uri(Uri::from_static("http://www.example.org/"))
+        .body(Body::empty())
+        .expect("failed to build request body");
+    let start = Instant::now();
+    let response = client.request(req).await.expect("failed to send response");
+    let duration = start.elapsed();
+    println!("ping time: {:?}", duration);
+    dbg!("{:?}", response);
+
 
     let cli = Cli::parse();
 
