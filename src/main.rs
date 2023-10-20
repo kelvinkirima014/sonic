@@ -1,5 +1,3 @@
-pub mod server;
-
 use clap::Parser;
 use hyper::{Client, Uri, Request, Body};
 use std::time::Instant;
@@ -12,7 +10,7 @@ use std::time::Instant;
 struct Cli {
     ///checks the speed of your internet connection
     #[arg(short, long)]
-    check: String,
+    check: Option<String>,
     #[arg(short, long)]
     upload: Option<bool>,
     #[arg(short, long)]
@@ -21,6 +19,8 @@ struct Cli {
 
 #[tokio::main]
 async fn main() {
+
+    
 
     let client = Client::new();
 

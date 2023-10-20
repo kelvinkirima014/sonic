@@ -3,6 +3,10 @@ name = "sonic"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+path = "src/main.rs"
+name = "sonic"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

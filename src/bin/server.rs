@@ -27,6 +27,7 @@ pub async fn run() -> Result<(), hyper::Error> {
         .route("/download", get(download));
 
     let addr: SocketAddr = ([127, 0, 0, 1], 8080).into();
+    println!("Server listening on port: http://{:?}", addr);
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
@@ -46,4 +47,9 @@ impl IntoResponse for DownloadError {
 
       (status, Json(json!({"error": err_message}))).into_response()
     }
+}
+
+#[tokio::main]
+async fn main() {
+    let _ = run().await;
 }
