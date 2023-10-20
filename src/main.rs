@@ -1,3 +1,5 @@
+pub mod server;
+
 use clap::Parser;
 use hyper::{Client, Uri, Request, Body};
 use std::time::Instant;
@@ -8,15 +10,13 @@ use std::time::Instant;
 #[command(author = "Kirima")]
 #[command(about = "CLI tool to measure the speed of your network")]
 struct Cli {
-    ///name 
+    ///checks the speed of your internet connection
     #[arg(short, long)]
-    name: String,
+    check: String,
     #[arg(short, long)]
-    second_arg: Option<String>,
+    upload: Option<bool>,
     #[arg(short, long)]
-    third_arg: Option<String>,
-    #[arg(short, long)]
-    count: u8,
+    download: Option<bool>,
 }
 
 #[tokio::main]
@@ -26,23 +26,26 @@ async fn main() {
 
     let req = Request::builder()
         .method(hyper::Method::GET)
-        .uri(Uri::from_static("http://www.example.org/"))
+        .uri(Uri::from_static("http://127.0.0.1:8080/download"))
         .body(Body::empty())
         .expect("failed to build request body");
     let start = Instant::now();
     let response = client.request(req).await.expect("failed to send response");
-    let duration = start.elapsed();
-    println!("ping time: {:?}", duration);
-    dbg!("{:?}", response);
+    dbg!("Response: {:?}", response);
 
 
-    let cli = Cli::parse();
+    let cli= Cli::parse();
 
-    println!("hello: {}", cli.name);
-    println!("count: {}", cli.count);
-
-    if let Some(arg) = cli.third_arg {
-        println!("third_arg: {:?}", arg);
+    if let  Some(arg) = cli.download {
+        println!("{:?}", arg);
     }
- 
+
+   // dbg!("Response: {:?}", response);
+
+    let duration = start.elapsed();
+    println!("Time elapsed: {:?}", duration);
+
+  
+
+
 }
