@@ -20,8 +20,6 @@ struct Cli {
 #[tokio::main]
 async fn main() {
 
-    
-
     let client = Client::new();
 
     let req = Request::builder()
